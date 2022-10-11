@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz@8..144&display=swap'); /* Body text */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap'); /* Heading text */
+
+:root{
+    --dark-pink: #EC6868;
+    --light-pink: #F48888;
+    --orange: #FA973C;
+    --dark-blue: #001769;
+    --hacker-green: #49ED9E;
+    --mid-gray: #BDBDBD;
+}
+
+.section{
+    margin: 10px 50px;
+    text-align: left;
+    
+}
+
+
+nav{
+    background-color: var(--dark-blue);
+    margin: 0;
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+    color: white;
+}
+
+h1{
+    text-transform: capitalize;
+    font-family: 'Inter', sans-serif;
+    font-size: 48;
+    color: var(--dark-pink);
+} 
+
+p{
+    font-family: 'Roboto', sans-serif;
+    font-size: 12;
+    color: black;
+    /*margin: 5px 20px;*/
+}
+
+code {
+    font-family: Consolas,"courier new";
+    color: var(--dark-blue);
+    padding: 2px;
+    font-size: 105%;
+}
+
+.code-block{
+    background-color: black;
+    color: white;
+}
+
+a{
+    color: var(--dark-pink);
+}
+
+.draggable{
+    cursor: move;
+    position: absolute;
+    user-select: none;
+}

@@ -1,0 +1,40 @@
+<%- include('components/navbarTwo'); -%>
+
+<section class = "page">
+    <div class = "left-page">
+        <%if(from.length >= 1){%>
+            <% for( var i = 0; i < from[0].content.length; i++){%>
+                <%if(from[0].content[i].conditional){%>
+                    <%continue%>
+                <%}else{%>
+                    <p class = <%=from[0].content[i].type%>><%=from[0].content[i].rawContent%></p>
+                <%}%>
+            <%}%>
+        <%}%>
+    </div>
+    <div class = "right-page">
+        <%if(to.length >= 1){%>
+            <% for( var i = 0; i < to[0].content.length; i++){%>
+                <%if(to[0].content[i].conditional){%>
+                    <%if(to[0].content[i].conditionalToLangauge == from[0].language){%>
+                        <%continue%>
+                    <%}%>
+                <%}else{%>
+                    <p class = <%=to[0].content[i].type%>><%=to[0].content[i].rawContent%></p>
+                <%}%>
+            <%}%>
+    </div>
+            <div class = "page-bottom">
+                <a href = "<%= "/c/" + course + "/" + (to[0].pageId + 1) + ""%>"><button>Next</button></a>
+            </div>
+        <%}else {%>
+            <div class = "page-bottom">
+                <a href = "<%= //"/c/" + course + "/" + (from[0].pageId + 1) + ""%>"><button>Next</button></a>
+            </div>
+        <%}%>
+    </div>
+    
+</section>
+
+
+<%- include('components/footer') %>

@@ -1,0 +1,16 @@
+<%- include('components/navbarTwo'); -%>
+
+<div class = "course-header">
+
+</div>
+
+<div class = "lessons">
+
+    <% for( var i = 0; i < info.length; i++){ %>
+        <div class = "lesson">
+            <h3><%=info[i].pageTitle%></h3>
+            <a href = <%= "/c/" + courseNum + "/" + i + "/"%> ><button>Here we go!</button></a>
+        </div>
+    <%}%>
+</div>
+<%- include('components/footer') %>

@@ -1,0 +1,38 @@
+.main{
+    padding: 50px 10%;
+}
+
+.main > .course, .lessons > .lesson{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 8px;
+}
+
+.main > .course{
+    border: 3px solid #FA973C;
+    padding: 5px 10px;
+    margin: 15px;
+}
+
+.main > .course > h3, .lessons > .lesson > h3{
+    color: #FA973C;
+}
+
+.main > .course > h3{
+    font-size: 1.3rem;
+    font-weight: 500;
+}
+
+.main > .course > a > button, .lessons > .lesson > a > button{
+    background-color: #EC6868;
+    border: 0;
+    border-radius: 8px;
+    color: #fff;
+}
+
+.main > .course > a > button{
+    font-size: 1.1rem;
+    padding: 10px 15px;
+    font-weight: 300;
+}

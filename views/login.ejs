@@ -1,0 +1,13 @@
+<%- include('components/navbarOne'); -%>
+
+<form class = "login-type" method = "post" action = "/login">
+    <div class = "login-header">
+        <img class = "singup-logo" src = "/assets/velox_logo.png">
+        <h2>Sign Up for Velox</h2>
+    </div>
+    <input id = "email" class = "login-input" type="email" placeholder = "email" name="email">
+    <input class = "login-input" type = "password" placeholder="password" name = "password">
+    <button type = "submit">Login</button>
+</form>
+
+<%- include('components/footer'); -%>

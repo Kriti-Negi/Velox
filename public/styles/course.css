@@ -1,0 +1,15 @@
+.lessons {
+    padding: 50px 10%;
+}
+
+.lessons > .lesson{
+    width: 100%;
+    padding: 0px 10px;
+    margin: 0;
+}
+
+.lessons > .lesson > a > button{
+    font-size: 1rem;
+    padding: 10px 15px;
+    font-weight: 300;
+}

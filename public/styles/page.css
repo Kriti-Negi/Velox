@@ -1,0 +1,26 @@
+.page{
+    padding: 50px 5%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 15px;
+    line-height: 150%;
+    font-size: 1rem;
+}
+
+.page > .page-bottom >a > button{
+    background-color: #EC6868;
+    border: 0;
+    padding: 10px 15px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    color: #fff;
+}
+
+.code{
+    font-family: 'Courier New', monospace;
+    background-color: #000;
+    color: #fff;
+    box-shadow: inset 0px -4px 4px #FA973C;
+    padding: 10px;
+    border-radius: 8px;
+}

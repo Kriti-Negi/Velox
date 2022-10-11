@@ -1,0 +1,13 @@
+<%- include('components/navbarTwo'); -%>
+
+<section class = "main">
+    <% for(var i = 0; i < courses.length; i++){ %>
+        <div class = "course">
+            <h3> From <%=courses[i].from%> to <%=courses[i].to%></h3>
+            <a href = <%= "/c/" + courses[i].courseId + "/"%>><button>Let's go!</button></a>
+        </div>
+    <%}%>
+    
+</section>
+
+<%- include('components/footer'); -%>

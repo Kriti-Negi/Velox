@@ -1,0 +1,101 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+}
+a{
+    text-decoration: none;
+}
+
+/*NAVBAR*/
+
+.navbar {
+    background-color: #001769;
+    height: 100px;
+    color: #fff;   
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.navbar > .left{
+    font-size: 1.3rem;
+}
+
+/*footer > .content > .footer-name*/
+.navbar > .left > .nav-title{
+    font-weight: 200;
+}
+.navbar > .right > .links, .navbar > .left{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.navbar > .right > .links{
+    list-style: none;
+}
+
+.navbar > div{
+    padding: 0px 30px;
+}
+
+.navbar > .right > .links > .list-item > a{
+    color: #fff;
+    padding: 10px;
+}
+
+.navbar > .right > .links > .list-item > a > .nav-button{
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 0;
+    border: 3px solid #49ED9E;
+}
+
+.navbar > .right > .links > .list-item > a > .btn-outline{
+    background-color: #001769;
+    color: #49ED9E
+}
+
+.navbar > .right > .links > .list-item > a > .btn-fill{
+    background-color: #49ED9E;
+    color: #001769;
+}
+
+.logo{
+    width: 50px;
+    padding-right: 10px;
+}
+/*FOOTER*/
+
+footer{
+    background-color: #001769;
+    color: #fff;
+}
+
+footer > .content{
+    padding: 70px 30px 30px;
+}
+
+footer > .content > p{
+    color: #fff;
+    font-size: 0.8rem;
+    padding: 5px 0;
+    margin: 0;
+}
+
+footer > .content > div{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+footer > .content > .footer-name > h2{
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 200;
+}
+/*LOGIN AND SIGNUP*/
+

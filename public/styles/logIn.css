@@ -1,0 +1,54 @@
+html {
+    -moz-text-size-adjust: none;
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+  }
+
+.login-type{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 50px;
+}
+
+.singup-logo{
+    width: 150px;
+}
+
+.login-header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.login-type > .login-input{
+    font-size: 1.1rem;
+    width: 70%;
+    max-width: 400px;
+    padding: 15px 10px;
+    border-radius: 8px;
+    margin: 5px;
+    border: 0;
+    background-color: #001769;
+    color: #fff;
+}
+
+.login-type > .login-input::placeholder{
+    color: #fff;
+}
+
+.login-type > button{
+    padding: 10px;
+    margin: 5px;
+    padding: 10px 20px;
+    background-color: #EC6868;
+    border-radius: 5px;
+    border: 0;
+    font-size: 1.1rem;
+    color: #fff;
+    font-weight: 700;
+    margin-top: 20px;
+}
+

@@ -1,0 +1,24 @@
+<%- include('components/navbarTwo'); -%>
+
+<form class = "addCourse" method = "post" action = "/newCourse">
+    <div class = "row">
+        <h2>I want to learn: </h2>
+        <select name="to">
+            <option value="js">JavaScript</option>
+            <option value="java">Java</option>
+            <option value="py">Python</option>
+        </select>
+    </div>
+    <div class = "row">
+        <h2>Starting from: </h2>
+        <select name="from">
+            <option value="js">JavaScript</option>
+            <option value="java">Java</option>
+            <option value="py">Python</option>
+        </select>
+    </div>
+    <div class = "row">
+        <button type = "submit">Begin</button>
+    </div>
+</form>
+<%- include('components/footer'); -%>
