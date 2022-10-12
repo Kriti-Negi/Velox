@@ -22,7 +22,8 @@ app.use(cookieParser());
 
 let session;
 
-mongoose.connect('mongodb://localhost:27017/UserProfiles', {useNewUrlParser: true});
+mongoose.connect('mongodb+srv://velox:sacrificial_email3.14@cluster0.en5v2ww.mongodb.net/velox?appName=mongosh+1.4.2', {useNewUrlParser: true});
+
 
 const userInfoSchema = new mongoose.Schema({
     username: String,
@@ -37,7 +38,35 @@ const userInfoSchema = new mongoose.Schema({
     ]
 });
 
-const User = new mongoose.model("User", userInfoSchema);
+//API REPLACEMENT
+
+const rawContentSchema = new mongoose.Schema({
+    type: String, 
+    conditional: Boolean, 
+    conditionalToLangauge: String,
+    rawTextContent: String
+})
+
+const contentSchema = new mongoose.Schema(
+    {
+        sectionTitle: String,
+        sectionId: Number,
+        rawContent: [rawContentSchema]
+    }
+)
+
+const pageSchema = new mongoose.Schema({
+    pageTitle: String,
+    topic: String,
+    pageId: Number,
+    language: String,
+    content: [
+        contentSchema
+    ]
+});
+
+const Page = mongoose.model("Page", pageSchema);
+const User = new mongoose.model("user", userInfoSchema);
 
 // creating 24 hours from milliseconds
 const oneDay = 1000 * 60 * 60 * 24;
@@ -86,12 +115,12 @@ app.get('/c/:courseNumber', (req, res) => {
     if(session){
         const courseNumber = req.params.courseNumber;
         const course = session.courses[courseNumber];
-        axios.get('https://blooming-eyrie-71183.herokuapp.com/imgSrCde/pages/' + course.to)
-            .then(function (response) {
-                res.render("course", {info: response.data, courseNum: courseNumber});
-            }).catch(function (error) {
-                console.log(error);
-            })
+
+        Page.find({language: course.to}, (err, results) => {
+            if(!err && results){
+                res.render("course", {info: results, courseNum: courseNumber});
+            }
+        })
         
     }else{
         res.redirect('/login');
@@ -104,32 +133,29 @@ app.get('/c/:courseNumber/:pageNum', (req, res) => {
         const course = session.courses[courseNumber];
         const page = req.params.pageNum;
 
-        let from;
-        let to;
-
-        axios.get('https://blooming-eyrie-71183.herokuapp.com/imgSrCde/pages/' + course.to + "/" + page)
-            .then(function (response) {
-                to = response.data;
-            }).catch(function (error) {
-                console.log(error);
-            }).then(() => {
-                axios.get('https://blooming-eyrie-71183.herokuapp.com/imgSrCde/pages/' + course.from + "/" + page)
-                .then(function (response) {
-                    from = response.data;
-                }).catch(function (error) {
-                    console.log(error);
-                }).then(() => {
-                    console.log(from);
-                    console.log(to);
-                    res.render('page', {from: from, to: to, course: req.params.courseNumber});
-
+        Page.findOne({pageId: page, language: course.to}, (err, result) => {
+            if(!err && result){
+                Page.findOne({language: course.from, topic: result.topic}, (err, result2) => {
+                    if(!err && result2){
+                        res.render('page', {from: result2, to: result, course: req.params.courseNumber});
+                    }else if(!err){
+                        res.render('page', {from: {content: []}, to: result, course: req.params.courseNumber});
+                    }
                 })
-            })
-
+            }
+        })
     }else{
         res.redirect('/login');
     }
 });
+
+app.post('/increment', (req, res) =>{
+    const proposedVal = req.body.curVal;
+    const currentCourseIndex = req.body.curCourse;
+    if(session.courses[curCourse].index + 1 == proposedVal){
+        //fin later
+    }
+})
 
 app.post('/login', (req, res) => {
     const username = req.body.email;
@@ -184,6 +210,7 @@ app.post("/signUp", (req, res) => {
     })
 });
 
+
 app.post('/newCourse', (req, res) => {
     const FROM = req.body.from;
     const TO = req.body.to; 
@@ -207,5 +234,6 @@ app.post('/newCourse', (req, res) => {
         }
     }
 })
+
 
 app.listen(3000);
