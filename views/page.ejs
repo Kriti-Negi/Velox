@@ -48,11 +48,9 @@
     
     <form action = "/increment" method = "post">
         <input type = "hidden" name = "curCourse" value = <%= course %>>
-        <input type = "hidden" name = "curVal" value = <%= to.pageId %>>
+        <input type = "hidden" name = "curVal" value = <%= to.pageId + 1 %>>
         <button type = "submit">Next</button>
     </form>
 </section>
-
-
 
 <%- include('components/footer') %>

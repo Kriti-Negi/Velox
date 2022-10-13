@@ -9,7 +9,15 @@
     <% for( var i = 0; i < info.length; i++){ %>
         <div class = "lesson">
             <h3><%=info[i].pageTitle%></h3>
-            <a href = <%= "/c/" + courseNum + "/" + i + "/"%> ><button>Here we go!</button></a>
+            <a href = <%= "/c/" + courseNum + "/" + i + "/"%> >
+                <%if(courseIndex == i){%>
+                    <button class = "next">Here we go!</button>
+                <%}else if(courseIndex > i){%>
+                    <button class = "done">Done</button>
+                <%}else{%>
+                    <button class = "locked">Locked</button>
+                <%}%>
+            </a>
         </div>
     <%}%>
 </div>

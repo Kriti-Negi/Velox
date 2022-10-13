@@ -115,13 +115,11 @@ app.get('/c/:courseNumber', (req, res) => {
     if(session){
         const courseNumber = req.params.courseNumber;
         const course = session.courses[courseNumber];
-
         Page.find({language: course.to}, (err, results) => {
             if(!err && results){
-                res.render("course", {info: results, courseNum: courseNumber});
+                res.render("course", {info: results, courseNum: courseNumber, courseIndex: course.index});
             }
         })
-        
     }else{
         res.redirect('/login');
     }
@@ -132,30 +130,45 @@ app.get('/c/:courseNumber/:pageNum', (req, res) => {
         const courseNumber = req.params.courseNumber;
         const course = session.courses[courseNumber];
         const page = req.params.pageNum;
-
-        Page.findOne({pageId: page, language: course.to}, (err, result) => {
-            if(!err && result){
-                Page.findOne({language: course.from, topic: result.topic}, (err, result2) => {
-                    if(!err && result2){
-                        res.render('page', {from: result2, to: result, course: req.params.courseNumber});
-                    }else if(!err){
-                        res.render('page', {from: {content: []}, to: result, course: req.params.courseNumber});
-                    }
-                })
-            }
-        })
+        if(course.index >= page){
+            Page.findOne({pageId: page, language: course.to}, (err, result) => {
+                if(!err && result){
+                    Page.findOne({language: course.from, topic: result.topic}, (err, result2) => {
+                        if(!err && result2){
+                            res.render('page', {from: result2, to: result, course: req.params.courseNumber});
+                        }else if(!err){
+                            res.render('page', {from: {content: []}, to: result, course: req.params.courseNumber});
+                        }
+                    })
+                }
+            })
+        }else{
+            res.redirect('/c/' + courseNumber);
+        }
     }else{
         res.redirect('/login');
     }
 });
 
-app.post('/increment', (req, res) =>{
+app.post('/increment', (req, res) => {
     const proposedVal = req.body.curVal;
     const currentCourseIndex = req.body.curCourse;
-    if(session.courses[curCourse].index + 1 == proposedVal){
-        //fin later
+    console.log(session.courses[currentCourseIndex])
+    if(session.courses[currentCourseIndex].index + 1 == proposedVal){
+        session.courses[currentCourseIndex].index = session.courses[currentCourseIndex].index + 1;
+        User.findOne({username: session.userid}, (err, result) => {
+            if(!err && result){
+                result.courses[currentCourseIndex].index = session.courses[currentCourseIndex].index;
+                result.save();
+            }
+        })
+        res.redirect('/c/' + currentCourseIndex + '/' + proposedVal)
+    }else if(session.courses[currentCourseIndex].index + 1 < proposedVal){
+        res.redirect('/c/' + currentCourseIndex + '/' + proposedVal)
+    }else{
+        res.redirect('/c/' + currentCourseIndex);
     }
-})
+});
 
 app.post('/login', (req, res) => {
     const username = req.body.email;
