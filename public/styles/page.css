@@ -1,13 +1,22 @@
 .page{
-    padding: 50px 5%;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 15px;
     line-height: 150%;
     font-size: 1rem;
+    padding: 20px 5% 50px;
+    line-height: 30px;
 }
 
-.page > .page-bottom >a > button{
+.header{
+    text-align: center;
+    /*background-color: #FA973C;
+    color: #fff;*/
+    color: #FA973C;
+    padding: 15px;
+}
+
+.next-btn, .backHome-btn{
     background-color: #EC6868;
     border: 0;
     padding: 10px 15px;
@@ -27,4 +36,18 @@
 
 .section-content{
     padding-bottom: 50px;
+}
+
+.congrats{
+    padding-bottom: 80px;
+    text-align: center;
+    grid-column: span 2;
+}
+
+.jdoodle{
+    grid-column: span 2;
+}
+
+.jdoodle-heading{
+    padding-left: 20px;
 }
