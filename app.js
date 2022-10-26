@@ -23,7 +23,7 @@ app.use(cookieParser());
 
 let session;
 
-mongoose.connect('mongodb+srv://velox:sacrificial_email3.14@cluster0.en5v2ww.mongodb.net/velox?appName=mongosh+1.4.2', {useNewUrlParser: true});
+mongoose.connect(process.env.MONGO_URL + 'appName=mongosh+1.4.2', {useNewUrlParser: true});
 
 
 const userInfoSchema = new mongoose.Schema({
@@ -73,7 +73,7 @@ const oneDay = 1000 * 60 * 60 * 24;
 
 //session middleware
 app.use(sessions({
-    secret: "heyKids",
+    secret: process.env.SESSION_SECRET,
     saveUninitialized:true,
     cookie: { maxAge: oneDay },
     resave: false
