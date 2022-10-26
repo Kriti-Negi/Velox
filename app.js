@@ -39,7 +39,6 @@ const userInfoSchema = new mongoose.Schema({
 });
 
 //API REPLACEMENT
-
 const rawContentSchema = new mongoose.Schema({
     type: String, 
     conditional: Boolean, 
@@ -134,12 +133,20 @@ app.get('/c/:courseNumber/:pageNum', (req, res) => {
             Page.findOne({pageId: page, language: course.to}, (err, result) => {
                 if(!err && result){
                     Page.findOne({language: course.from, topic: result.topic}, (err, result2) => {
-                        if(!err && result2){
-                            res.render('page', {from: result2, to: result, course: req.params.courseNumber});
-                        }else if(!err){
+                        if(!err){
+                            if(result && result2){
+                                res.render('page', {from: result2, to: result, course: req.params.courseNumber});
+                            }else if(result2){
+                                res.render('page', {from: false, to: result, course: req.params.courseNumber});
+                            }else{
+                                res.render('page', {from: result2, to: result, course: req.params.courseNumber});
+                            }
+                        }else if(err){
                             res.render('page', {from: {content: []}, to: result, course: req.params.courseNumber});
                         }
                     })
+                }else if(!result && !err){
+                    res.render('page', {from: {language: course.from}, to: {language: course.to}, course: req.params.courseNumber});
                 }
             })
         }else{
@@ -153,7 +160,6 @@ app.get('/c/:courseNumber/:pageNum', (req, res) => {
 app.post('/increment', (req, res) => {
     const proposedVal = req.body.curVal;
     const currentCourseIndex = req.body.curCourse;
-    console.log(session.courses[currentCourseIndex])
     if(session.courses[currentCourseIndex].index + 1 == proposedVal){
         session.courses[currentCourseIndex].index = session.courses[currentCourseIndex].index + 1;
         User.findOne({username: session.userid}, (err, result) => {
@@ -163,11 +169,23 @@ app.post('/increment', (req, res) => {
             }
         })
         res.redirect('/c/' + currentCourseIndex + '/' + proposedVal)
-    }else if(session.courses[currentCourseIndex].index + 1 < proposedVal){
+    }else if(session.courses[currentCourseIndex].index + 1 > proposedVal){
         res.redirect('/c/' + currentCourseIndex + '/' + proposedVal)
     }else{
         res.redirect('/c/' + currentCourseIndex);
     }
+});
+
+app.post('/finCourse', (req, res) => {
+    const course = req.body.course;
+    session.courses[course].index = session.courses[course].index + 1;
+    User.findOne({username: session.userid}, (err, result) => {
+        if(!err && result){
+            result.courses[course].index = session.courses[course].index;
+            result.save();
+        }
+    });
+    res.redirect('/c/' + course);
 });
 
 app.post('/login', (req, res) => {
@@ -228,7 +246,6 @@ app.post('/newCourse', (req, res) => {
     const FROM = req.body.from;
     const TO = req.body.to; 
     if(session){
-
         if(FROM == TO){
             res.redirect('/newCourse');
         }else{

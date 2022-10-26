@@ -6,37 +6,24 @@
 
 <section class = "page">
     <div class = "left-page">
-        <%if(from){%>
+        <%if(from && from.topic){%>
             <% for( var i = 0; i < from.content.length; i++){%>
                 <div class = "section">
                     <h3 class = "section-header"><%=from.topic%>: <%=from.language%></h3>
-                    <div clss = "section-content">
+                    <div class = "section-content">
                         <% for(var j = 0; j < from.content[i].rawContent.length; j++){%>
                             <%if(!from.content[i].rawContent[j].conditional){%>
-                                <p><%= from.content[i].rawContent[j].rawTextContent %></p>
+                                <%if(from.content[i].rawContent[j].type == "code"){%>
+                                    <pre><%-  from.content[i].rawContent[j].rawTextContent%></pre>
+                                <%}else{%>
+                                    <p><%-  from.content[i].rawContent[j].rawTextContent%></p>
+                                <%}%>
                             <%}%>
                             <%if(from.content[i].rawContent[j].conditional && from.content[i].rawContent[j].conditionalToLanguage == to.language){%>
-                                <p><%= from.content[i].rawContent[j].rawTextContent %></p>
-                            <%}%>
-                        <%}%>
-                    </div>
-                </div>
-            <%}%>
-        <%}%>
-    </div>
-    <div class = "right-page">
-        <%if(to){%>
-            <% for( var i = 0; i < to.content.length; i++){%>
-                <div class = "section">
-                    <h3 class = "section-header"><%=to.topic%>: <%=to.language%></h3>
-                    <div clss = "section-content">
-                        <% for(var j = 0; j < to.content[i].rawContent.length; j++){%>
-                            <%if(!to.content[i].rawContent[j].conditional){%>
-                                <p><%= to.content[i].rawContent[j].rawTextContent %></p>
-                            <%}%>
-                            <%if(from){%>
-                                <%if(to.content[i].rawContent[j].conditional && to.content[i].rawContent[j].conditionalToLanguage == from.language){%>
-                                    <p><%= to.content[i].rawContent[j].rawTextContent %></p>
+                                <%if(from.content[i].rawContent[j].type == "code"){%>
+                                    <pre><%-  from.content[i].rawContent[j].rawTextContent%></pre>
+                                <%}else{%>
+                                    <p><%-  from.content[i].rawContent[j].rawTextContent%></p>
                                 <%}%>
                             <%}%>
                         <%}%>
@@ -45,12 +32,59 @@
             <%}%>
         <%}%>
     </div>
-    
-    <form action = "/increment" method = "post">
-        <input type = "hidden" name = "curCourse" value = <%= course %>>
-        <input type = "hidden" name = "curVal" value = <%= to.pageId + 1 %>>
-        <button type = "submit">Next</button>
-    </form>
+    <div class = "right-page">
+        <%if(to && to.topic){%>
+            <% for( var i = 0; i < to.content.length; i++){%>
+                <div class = "section">
+                    <h3 class = "section-header"><%=to.topic%>: <%=to.language%></h3>
+                    <div class = "section-content">
+                        <% for(var j = 0; j < to.content[i].rawContent.length; j++){%>
+                            <%if(!to.content[i].rawContent[j].conditional){%>
+                                <%if(to.content[i].rawContent[j].type == "code"){%>
+                                    <pre><%- to.content[i].rawContent[j].rawTextContent %></pre>
+                                <%}else{%>
+                                    <p><%- to.content[i].rawContent[j].rawTextContent %></p>
+                                <%}%>
+                            <%}%>
+                            <%if(from){%>
+                                <%if(to.content[i].rawContent[j].conditional && to.content[i].rawContent[j].conditionalToLanguage == from.language){%>
+                                    <%if(to.content[i].rawContent[j].type == "code"){%>
+                                        <pre><%- to.content[i].rawContent[j].rawTextContent %></pre>
+                                    <%}else{%>
+                                        <p><%- to.content[i].rawContent[j].rawTextContent %></p>
+                                    <%}%>
+                                <%}%>
+                            <%}%>
+                        <%}%>
+                    </div>
+                </div>
+            <%}%>
+        <%}else{%>
+        </div>
+            <div class = "congrats">
+                <h1 class = "congrat-header">Congratulations!</h1>
+                <p class = "congrat-text">You have finished all the available modules for <%=to.language%> from <%=from.language%>. <br> Best wishes for putting your newfound knowledge to good use!</p>
+                <form action = "/finCourse" method = "post">
+                    <input type ="hidden" name = "course" value = <%=course%>>
+                    <button type = "submit">Back to home</button>
+                </form>
+            </div>
+        <%}%>
+    </div>
+    <%if(to && to.topic){%>
+        <form action = "/increment" method = "post">
+            <input type = "hidden" name = "curCourse" value = <%= course %>>
+            <input type = "hidden" name = "curVal" value = <%= to.pageId + 1 %>>
+            <button type = "submit">Next</button>
+        </form>
+    <%}%>
 </section>
+
+<script>
+    function setContent(elem, content){
+        elem.innerHTML = content;
+        console.log(content);
+    }
+</script>
 
 <%- include('components/footer') %>

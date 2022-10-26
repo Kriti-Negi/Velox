@@ -6,19 +6,34 @@
 
 <div class = "lessons">
 
-    <% for( var i = 0; i < info.length; i++){ %>
-        <div class = "lesson">
-            <h3><%=info[i].pageTitle%></h3>
-            <a href = <%= "/c/" + courseNum + "/" + i + "/"%> >
-                <%if(courseIndex == i){%>
-                    <button class = "next">Here we go!</button>
-                <%}else if(courseIndex > i){%>
-                    <button class = "done">Done</button>
-                <%}else{%>
-                    <button class = "locked">Locked</button>
-                <%}%>
-            </a>
-        </div>
+    <% for( var i = 0; i < info.length + 1; i++){ %>
+        <%if(i == info.length){%>
+            <div class = "lesson">
+                <h3>Claim Certificate</h3>
+                <a href = <%= "/c/" + courseNum + "/" + i + "/"%> >
+                    <%if(courseIndex == i){%>
+                        <button class = "certificate">Claim</button>
+                    <%}else if(courseIndex > i){%>
+                        <button class = "certificate">Claimed</button>
+                    <%}else{%>
+                        <button class = "locked">Locked</button>
+                    <%}%>
+                </a>
+            </div>
+        <%}else{%>
+            <div class = "lesson">
+                <h3><%=info[i].pageTitle%></h3>
+                <a href = <%= "/c/" + courseNum + "/" + i + "/"%> >
+                    <%if(courseIndex == i){%>
+                        <button class = "next">Here we go!</button>
+                    <%}else if(courseIndex > i){%>
+                        <button class = "done">Done</button>
+                    <%}else{%>
+                        <button class = "locked">Locked</button>
+                    <%}%>
+                </a>
+            </div>
+        <%}%>
     <%}%>
 </div>
 <%- include('components/footer') %>
