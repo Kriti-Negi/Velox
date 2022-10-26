@@ -1,4 +1,4 @@
-const dotenv = require("dotenv");
+require('dotenv').config();
 const express = require("express");
 const ejs = require("ejs");
 const bodyParser = require("body-parser");
@@ -130,24 +130,31 @@ app.get('/c/:courseNumber/:pageNum', (req, res) => {
         const courseNumber = req.params.courseNumber;
         const course = session.courses[courseNumber];
         const page = req.params.pageNum;
+
+        let lang = "";
+        if(course.to == "py"){
+            lang = "python3";
+        }else if(course.to == "java"){
+            lang = "java";
+        }
         if(course.index >= page){
             Page.findOne({pageId: page, language: course.to}, (err, result) => {
                 if(!err && result){
                     Page.findOne({language: course.from, topic: result.topic}, (err, result2) => {
                         if(!err){
                             if(result && result2){
-                                res.render('page', {from: result2, to: result, course: req.params.courseNumber});
+                                res.render('page', {from: result2, to: result, course: req.params.courseNumber, lang: lang});
                             }else if(result2){
-                                res.render('page', {from: false, to: result, course: req.params.courseNumber});
+                                res.render('page', {from: false, to: result, course: req.params.courseNumber, lang: lang});
                             }else{
-                                res.render('page', {from: result2, to: result, course: req.params.courseNumber});
+                                res.render('page', {from: result2, to: result, course: req.params.courseNumber, lang: lang});
                             }
                         }else if(err){
-                            res.render('page', {from: {content: []}, to: result, course: req.params.courseNumber});
+                            res.render('page', {from: {content: []}, to: result, course: req.params.courseNumber, lang: lang});
                         }
                     })
                 }else if(!result && !err){
-                    res.render('page', {from: {language: course.from}, to: {language: course.to}, course: req.params.courseNumber});
+                    res.render('page', {from: {language: course.from}, to: {language: course.to}, course: req.params.courseNumber, lang: lang});
                 }
             })
         }else{
